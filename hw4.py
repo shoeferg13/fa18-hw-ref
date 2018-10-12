@@ -13,7 +13,17 @@ most_common_char
 Given an input string s, return the most common character in s.
 """
 def most_common_char(s):
-	pass
+	if len(s) == 0:
+		return None
+	s = s.lower()
+	max = 0;
+	for char in s:
+		if s.count(char) > max:
+			max = s.count(char)
+	return s[max]
+
+
+print(most_common_char(""))
 
 
 """
@@ -37,28 +47,45 @@ Example 2:
 		None
 """
 def alphabet_finder(s):
-	pass
+	alpha = {"abcdefghijklmnopqrstuv"}
+	arr = []
+	s = s.lower()
+	returnString = ""
+	input = s
+	for i in range(0, len(s)):
+		if s[i] in alpha:
+			alpha.remove(s[i])
+		arr += input[i]
+		if (len(alpha) == 0):
+			return returnString.join(arr)
+	return None
 
 
-"""
-longest_unique_subarray
-
-Given an input list of integers arr,
-return a list with two values [a,b] such that arr[a:a+b] is the longest unique subarray.
-That is to say, all the elements of arr[a:a+b] must be unique,
-and b must be the largest value possible for the array.
-If multiple such subarrays exist (i.e. same b, different a), use the lowest value of a.
-
-Example:
-	Argument:
-		[1, 2, 3, 1, 4, 5, 6]
-	Return:
-		[1, 6]
-"""
-def longest_unique_subarray(arr):
-	pass
 
 
+
+
+
+
+# """
+# longest_unique_subarray
+#
+# Given an input list of integers arr,
+# return a list with two values [a,b] such that arr[a:a+b] is the longest unique subarray.
+# That is to say, all the elements of arr[a:a+b] must be unique,
+# and b must be the largest value possible for the array.
+# If multiple such subarrays exist (i.e. same b, different a), use the lowest value of a.
+#
+# Example:
+# 	Argument:
+# 		[1, 2, 3, 1, 4, 5, 6]
+# 	Return:
+# 		[1, 6]
+# """
+# def longest_unique_subarray(arr):
+# 	pass
+#
+#
 """
 string_my_one_true_love
 
@@ -99,7 +126,40 @@ Example 3:
 		False
 """
 def string_my_one_true_love(s):
-	pass
+	if (s == None):
+		return null
+	charDict = {char : 0 for char in s}
+	for char in s:
+		charDict[char] += 1
+	valuesArr = charDict.values()
+	valuesArr.sort()
+
+	returnBool = True
+	change = 0
+	good = 0
+	diff = 0
+	maxDiff = 0
+	for i in range(len(valuesArr) - 1):
+		if valuesArr[i] != valuesArr[i + 1]:
+			returnBool = false
+			diff = abs(arr[i + 1] - arr[i])
+			good = arr[i]
+
+			for j in range(i, len(valuesArr)):
+				if valuesArr[j] != good:
+					change += diff
+
+			if diff > maxDiff:
+				maxDiff = diff
+
+	if (returnBool == True) or (maxDiff <= 1 and change <= 1) or (1 + diff == good):
+		return True
+	return False
+
+
+
+print(string_my_one_true_love("abcbabcdcdda"))
+
 
 
 """
@@ -116,33 +176,51 @@ Example:
 	Return:
 		1961
 """
+
+
 def alive_people(data):
-	pass
+	if data == None or len(data) == 0:
+		return None
+	sumArr = []
+	for i in data:
+		for j in range(i, i[1] + 1):
+			sumArr.append(i[0] + j)
 
+	dictYears = {i : 0 for i in sumArr}
+	for i in sumArr:
+		dictYears[i] += 1
+	returnYear = 0
+	max = 0
+	for i in dictYears:
+		if dictYears[i] > max:
+			max = dictYears[i]
+			returnYear = i
 
-"""
-three_sum
+	return returnYear
 
-Given an input list of integers arr, and a constant target t,
-is there a triplet of distinct elements [a,b,c] so that a + b + c = t?
-
-Return a 2-dimensional list of all the unique triplets as defined above.
-Each inner list should be a triplet as we defined above.
-We don't care about the order of triplets, nor the order of elements in each triplet.
-
-Example:
-	Arguments:
-		[-1, 0, 1, 2, -1, -4], 0
-	Return:
-		[
-			[-1, 0, 1],
-			[-1, -1, 2]
-		]
-"""
-def three_sum(arr, t):
-	pass
-
-
+# """
+# three_sum
+#
+# Given an input list of integers arr, and a constant target t,
+# is there a triplet of distinct elements [a,b,c] so that a + b + c = t?
+#
+# Return a 2-dimensional list of all the unique triplets as defined above.
+# Each inner list should be a triplet as we defined above.
+# We don't care about the order of triplets, nor the order of elements in each triplet.
+#
+# Example:
+# 	Arguments:
+# 		[-1, 0, 1, 2, -1, -4], 0
+# 	Return:
+# 		[
+# 			[-1, 0, 1],
+# 			[-1, -1, 2]
+# 		]
+# """
+# def three_sum(arr, t):
+# 	pass
+#
+#
 """
 happy_numbers
 
@@ -160,40 +238,73 @@ Example 2:
 		15
 	Return:
 		4294967296 ** (1 / 16) (i.e., 4)
+		
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1.
 """
-def happy_numbers(n):
-	pass
+# def happy_numbers(n):
+# 	happyArr = []
+# 	if (n == 0):
+# 		return None
+# 	if (n == 1):
+# 		return 1
+# 	nArr = []
+# 	for i in range(1, n):
+# 		result = 0
+# 		nArr = [int(d) for d in str(i)]
+# 		for j in nArr:
+# 			result += j**2
+# 			checker = [int(d) for d in str(result)]
+# 			if (len(checker) == 1)
+# 			if (result == 1):
+# 				happArr.append(j)
+# 	return happyArr
+#
+#
 
 
-"""
-zero_sum_subarray
-
-Given an input list of integers arr,
-return a list with two values [a,b] such that sum(arr[a:a+b]) == 0.
-In plain English, give us the location of a subarray of arr that starts at index a
-and continues for b elements, so that the sum of the subarray you indicated is zero.
-If multiple such subarrays exist, use the lowest valid a, and then lowest valid b,
-in that order of priority.
-If no such subarray exists, return None.
-
-Ungraded food for thought:
-Think about how to generalize your solution to any arbitrary target sum.
-
-Example 1:
-	Argument:
-		[0, 1, 2, 3, 4, 5]
-		Clearly, the first element by itself forms a subarray with sum == 0.
-	Return:
-		[0, 1]
-
-Example 2:
-	Argument:
-		[10, 20, -20, 3, 21, 2, -6]
-		In this case, arr[1:3] = [20, -20], so there is a zero sum subarray.
-	Return:
-		[1, 2]
-"""
-def zero_sum_subarray(arr):
-    pass 
 
 
+# """
+# zero_sum_subarray
+#
+# Given an input list of integers arr,
+# return a list with two values [a,b] such that sum(arr[a:a+b]) == 0.
+# In plain English, give us the location of a subarray of arr that starts at index a
+# and continues for b elements, so that the sum of the subarray you indicated is zero.
+# If multiple such subarrays exist, use the lowest valid a, and then lowest valid b,
+# in that order of priority.
+# If no such subarray exists, return None.
+#
+# Ungraded food for thought:
+# Think about how to generalize your solution to any arbitrary target sum.
+#
+# Example 1:
+# 	Argument:
+# 		[0, 1, 2, 3, 4, 5]
+# 		Clearly, the first element by itself forms a subarray with sum == 0.
+# 	Return:
+# 		[0, 1]
+#
+# Example 2:
+# 	Argument:
+# 		[10, 20, -20, 3, 21, 2, -6]
+# 		In this case, arr[1:3] = [20, -20], so there is a zero sum subarray.
+# 	Return:
+# 		[1, 2]
+# """
+# def zero_sum_subarray(arr):
+# 	sum = 0
+# 	startIndex = 0
+# 	endIndex = 0
+# 	returnArray = []
+# 	for i in arr:
+# 		sum += i
+# 		if sum == 0:
+#
+#
+#
+#
+#
